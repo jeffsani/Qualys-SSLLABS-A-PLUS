@@ -5,7 +5,7 @@ version: "1.0"
 display-name: "Qualys SSL LABS A+ SSL Configuration"
 description: "This stylebook configures an existing SSL VServer on Citrix ADC with required settings to obtain an A+ score for the Qualys SSL Labs Scan"
 schema-version: "1.0"
-import-stylebooks: 
+import-stylebooks:
   -
     namespace: netscaler.nitro.config
     prefix: ns
@@ -18,3 +18,59 @@ import-stylebooks:
     namespace: com.citrix.adc.stylebooks
     prefix: stlb
     version: "1.0"
+parameters:
+  -
+    name: sslprofilename
+    label: "Qualys A+ SSL Profile Name"
+    description: "Name of the SSL Profile"
+    type: string
+    key: true
+    gui:
+      updatable: true
+    required: true
+
+ -
+    name: ssl-config
+    label: SSL Parameters Config Section
+    type: object
+    gui:
+      collapse_pane: true
+    parameters:
+      -
+        name: ssl-ciphers
+        label: SSL Ciphers
+        type: string[]
+        allowed-values:
+          - TLS1-AES-256-CBC-SHA
+          - SSL3-EDH-DSS-DES-CBC3-SHA
+          - TLS1-DHE-DSS-AES-256-CBC-SHA
+          - SSL3-EDH-RSA-DES-CBC3-SHA
+          - TLS1-DHE-RSA-AES-256-CBC-SHA
+          - TLS1-DHE-RSA-AES-128-CBC-SHA
+          - TLS1-AES-128-CBC-SHA
+          - TLS1-DHE-DSS-RC4-SHA
+          - TLS1-DHE-DSS-AES-128-CBC-SHA
+        required: true
+      -
+        name: ssl-protocols
+        label: SSL Protocols
+        type: object
+        parameters:
+          -
+            name: tls11
+            label: TLS 1.1
+            type: boolean
+            default: true
+          -
+            name: tls12
+            label: TLS 1.2
+            type: boolean
+            default: true
+         -
+            name: tls13
+            label: TLS 1.3
+            type: boolean
+            default: true
+components:
+  -
+    name: ssl-profile-comp
