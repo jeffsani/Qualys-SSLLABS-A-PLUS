@@ -28,8 +28,7 @@ parameters:
     gui:
       updatable: true
     required: true
-
- -
+  -
     name: ssl-config
     label: SSL Parameters Config Section
     type: object
@@ -41,15 +40,16 @@ parameters:
         label: SSL Ciphers
         type: string[]
         allowed-values:
-          - TLS1-AES-256-CBC-SHA
-          - SSL3-EDH-DSS-DES-CBC3-SHA
-          - TLS1-DHE-DSS-AES-256-CBC-SHA
-          - SSL3-EDH-RSA-DES-CBC3-SHA
-          - TLS1-DHE-RSA-AES-256-CBC-SHA
-          - TLS1-DHE-RSA-AES-128-CBC-SHA
-          - TLS1-AES-128-CBC-SHA
-          - TLS1-DHE-DSS-RC4-SHA
-          - TLS1-DHE-DSS-AES-128-CBC-SHA
+          - TLS1.3-AES128-GCM-SHA256
+          - TLS1.3-AES256-GCM-SHA384
+          - TLS1.2-ECDHE-ECDSA-AES256-SHA384
+          - TLS1.2-ECDHE-ECDSA-AES256-GCM-SHA384
+          - TLS1-ECDHE-ECDSA-AES256-SHA
+          - TLS1.2-DHE-RSA-AES256-GCM-SHA384
+          - TLS1.2-ECDHE-ECDSA-AES128-GCM-SHA256
+          - TLS1.2-ECDHE-RSA-CHACHA20-POLY1305
+          - TLS1.2-ECDHE-ECDSA-CHACHA20-POLY1305
+          - TLS1.2-ECDHE-RSA-AES256-GCM-SHA384
         required: true
       -
         name: ssl-protocols
@@ -60,7 +60,7 @@ parameters:
             name: tls11
             label: TLS 1.1
             type: boolean
-            default: true
+            default: false
           -
             name: tls12
             label: TLS 1.2
