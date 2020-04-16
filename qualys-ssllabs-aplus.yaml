@@ -3,7 +3,7 @@ name: qualys-ssllabs-aplus
 namespace: com.citrix.adc.stylebooks
 version: "1.0"
 display-name: "Qualys SSL LABS A+ SSL Configuration"
-description: "This stylebook configures an existing SSL VServer on Citrix ADC with required settings to obtain an A+ score for the Qualys SSL Labs Scan"
+description: "This stylebook configures a Front-end SSL Profile with the settings and ciphers necessary to obtain an A+ rating with Qualys SSL Labs Scan"
 schema-version: "1.0"
 import-stylebooks:
   -
@@ -36,7 +36,7 @@ parameters:
       collapse_pane: true
     parameters:
       -
-        name: ssl-ciphers
+        name: ssl-cipher-suites
         label: SSL Ciphers
         type: string[]
         allowed-values:
@@ -53,7 +53,8 @@ parameters:
         required: true
       -
         name: ssl-protocols
-        label: SSL Protocols
+        label: Allowed SSL Protocols
+        description: "Which SSL Protocols should be allowed"
         type: object
         parameters:
           -
@@ -71,6 +72,39 @@ parameters:
             label: TLS 1.3
             type: boolean
             default: true
+
+substitutions:
+    tls11-selection:
+        true: "ENABLED"
+        false: "DISABLED"
+    tls12-selection:
+        true: "ENABLED"
+        false: "DISABLED"
+    tls13-selection:
+        true: "ENABLED"
+        false: "DISABLED"
 components:
   -
     name: ssl-profile-comp
+    type: ns::sslprofile
+    properties:
+      name: $parameters.sslprofilename
+      sslprofiletype: "FrontEnd"
+      tls1: "DISABLED"
+      tls11: $substitutions.tls11-selection[$parameters.tls11]
+      tls12: $substitutions.tls11-selection[$parameters.tls12]
+      tls13: $substitutions.tls11-selection[$parameters.tls13]
+      denysslreneg: "NONSECURE"
+      
+  -
+    name: sslprofile-sslcipher-binding-comp
+    type: ns::sslprofile_sslcipher_binding
+    properties:
+      name?: $parameters.name
+      #name: $parameters.name
+      ciphername?: $parameters.ssl-cipher-suites
+      cipherpriority?: $parameters.cipherpriority
+
+ 
+outputs:
+  - 
