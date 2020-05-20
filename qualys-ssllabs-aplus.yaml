@@ -44,7 +44,6 @@ parameters:
           - TLS1.3-AES256-GCM-SHA384
           - TLS1.2-ECDHE-ECDSA-AES256-SHA384
           - TLS1.2-ECDHE-ECDSA-AES256-GCM-SHA384
-          - TLS1-ECDHE-ECDSA-AES256-SHA
           - TLS1.2-DHE-RSA-AES256-GCM-SHA384
           - TLS1.2-ECDHE-ECDSA-AES128-GCM-SHA256
           - TLS1.2-ECDHE-RSA-CHACHA20-POLY1305
@@ -87,14 +86,71 @@ components:
   -
     name: ssl-profile-comp
     type: ns::sslprofile
-    properties:
+    properties: 
+      cipherpriority: "0"
+      cipherredirect: "DISABLED"
+      cleartextport: 0
+      clientauth: "DISABLED"
+      clientauthuseboundcachain: "DISABLED"
+      denysslreneg: "NONSECURE"
+      dh: "DISABLED"
+      dhcount: "0"
+      dhekeyexchangewithpsk: "NO"
+      dhkeyexpsizelimit: "DISABLED"
+      dropreqwithnohostheader: "NO"
+      encrypttriggerpktcount: "45"
+      ersa: "ENABLED"
+      ersacount: "0"
+      feature: "SYSTEM"
+      hsts: "ENABLED"
+      includesubdomains: "YES"
+      insertionencoding: "Unicode"
+      invoke: false
+      maxage: "157680000"
       name: $parameters.sslprofilename
+      nonfipsciphers: "DISABLED"
+      ocspstapling: "DISABLED"
+      preload: "YES"
+      prevsessionkeylifetime: "0"
+      pushenctrigger: "Always"
+      pushenctriggertimeout: "1"
+      pushflag: "0"
+      quantumsize: "8192"
+      redirectportrewrite: "DISABLED"
+      sendclosenotify: "YES"
+      serverauth: "DISABLED"
+      service: "0"
+      sessionkeylifetime: "3000"
+      sessionticket: "DISABLED"
+      sessionticketkeyrefresh: "ENABLED"
+      sessionticketlifetime: "300"
+      sessreuse: "ENABLED"
+      sesstimeout: "120"
+      skipcaname: false
+      skipclientcertpolicycheck: "DISABLED"
+      snicert: false
+      snienable: "DISABLED"
+      snihttphostmatch: "CERT"
+      ssl3: "DISABLED"
+      sslimaxsessperserver: "10"
+      sslinterception: "DISABLED"
+      ssliocspcheck: "DISABLED"
+      sslireneg: "DISABLED"
+      ssliverifyservercertforreuse: "ENABLED"
+      ssllogprofile: "SSL_Log"
+      sslpfobjecttype: "0"
       sslprofiletype: "FrontEnd"
+      sslredirect: "ENABLED"
+      ssltriggertimeout: "100"
+      strictcachecks: "NO"
+      strictsigdigestcheck: "DISABLED"
       tls1: "DISABLED"
       tls11: $substitutions.tls11-selection[$parameters.tls11]
       tls12: $substitutions.tls11-selection[$parameters.tls12]
       tls13: $substitutions.tls11-selection[$parameters.tls13]
-      denysslreneg: "NONSECURE"
+      tls13sessionticketsperauthcontext: "1"
+      zerorttearlydata: "DISABLED"
+
       
   -
     name: sslprofile-sslcipher-binding-comp
